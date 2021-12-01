@@ -1,0 +1,23 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    display: grid;
+    grid-template-rows: 80px 1fr 80px;
+    min-height: 100vh;
+}
+
+.header {
+    background-color: #f69c9c;
+}
+
+.body {
+
+}
+
+.footer {
+    background-color: #414141;
+    color: #fff;
+}
