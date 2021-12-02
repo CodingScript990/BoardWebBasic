@@ -41,6 +41,8 @@ public class UserJoinServlet extends HttpServlet {
         entity.setGender(gender);
         // 단 방향은 복호화를 할 수 없다!
 
+        System.out.println(entity);
+
         int result = UserDAO.join(entity);
 
         res.sendRedirect("/user/login");

@@ -3,7 +3,7 @@ function joinChk() {
 
     // return false; // false 값만 무조건 값이 안날라감!
 
-    let frm = document.querySelector('#frm');
+    let frm = document.querySelector('#frm'); // 선택자!
 
     if (frm.uid.value.length < 5 || frm.uid.value.length > 20) {
         alert('아이디를 5~20자 사이로 작성해 주세요!');

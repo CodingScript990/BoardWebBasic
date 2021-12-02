@@ -1,6 +1,7 @@
 * {
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
 }
 
 .container {
@@ -11,6 +12,40 @@
 
 .header {
     background-color: #f69c9c;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+table, td, th {
+    border: 1px solid #262626;
+    border-collapse: collapse;
+}
+
+td, th {
+    padding: 5px;
+}
+
+.topMenu {
+    display: flex;
+}
+
+.topMenu li a{
+    color: #fff;
+}
+
+.topMenu li a:hover {
+    color: #414141;
+}
+
+.topMenu li:not(:first-child) {
+    margin-left: 15px;
 }
 
 .body {
