@@ -16,7 +16,7 @@
                 <td><c:out value="${item.title}"/></td>
                 <td>${item.hit}</td>
                 <td><c:out value="${item.writerNm}"/></td>
-                <td>${item.rdt}</td>
+                <td><c:out value="${item.mdt}"/></td>
             </tr>
         </c:forEach>
     </table>

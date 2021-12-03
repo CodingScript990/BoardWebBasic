@@ -70,7 +70,7 @@ public class UserDAO {
                     loginUser = new UserEntity();
                     loginUser.setIuser(rs.getInt("iuser"));
                     loginUser.setUid(entity.getUid());
-                    loginUser.setUpw(rs.getString("nm"));
+                    loginUser.setNm(rs.getString("nm"));
                     loginUser.setGender(rs.getInt("gender"));
                 } else {
                     result = 3; // 비밀번호 틀림
