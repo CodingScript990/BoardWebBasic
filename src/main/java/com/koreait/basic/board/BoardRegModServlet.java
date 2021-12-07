@@ -46,8 +46,14 @@ public class BoardRegModServlet extends HttpServlet {
         }
 
         int iboard = Utils.getParameterInt(req, "iboard");
+        
         String title = req.getParameter("title");
+        // title script 방지 작업을 하면 jsp에 할 필요가 없어짐!
+        title = title.replace("<", "&lt;").replace(">", "&gt;");
+
         String ctnt = req.getParameter("ctnt");
+        // ctnt script 방지 작업을 하면 jsp에 할 필요가 없어짐!
+        ctnt = ctnt.replace("<", "&lt;").replace(">", "&gt;");
 
         int result = 0;
         BoardEntity entity = new BoardEntity();

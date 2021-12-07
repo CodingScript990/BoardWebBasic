@@ -19,16 +19,16 @@
                 로그인 상태면 메뉴 : 로그아웃
              -->
             <ul class="topMenu">
+                <li><a href="/board/list">게시판</a></li>
                     <c:if test="${sessionScope.loginUser != null}">
-                        <li><a href="/user/logout">로그아웃</a></li>
                         <li><a href="/board/regmod">글쓰기</a></li>
                         <li>${sessionScope.loginUser.nm}(${sessionScope.loginUser.uid})님 환영합니다.</li>
+                        <li><a href="/user/logout">로그아웃</a></li>
                     </c:if>
                     <c:if test="${sessionScope.loginUser == null}">
-                        <li><a href="/user/login">로그인</a></li>
-                        <li><a href="/user/join">회원가입</a></li>
+                        <li style="flex-grow: 1; text-align: right;"><a href="/user/login">로그인</a></li>
+                        <li style="flex-grow: 0; text-align: right"><a href="/user/join">회원가입</a></li>
                     </c:if>
-                <li><a href="/board/list">게시판</a></li>
             </ul>
         </div>
         <div class="body">

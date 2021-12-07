@@ -6,5 +6,10 @@ import lombok.Setter;
 @Getter
 @Setter // 에노테이션
 public class BoardDTO {
-    private int iboard;
+    private int iboard; // iboard
+    private int page; // page
+    private int startIdx; // index
+    private int rowCnt; // record
+    private int searchType; // type
+    private String searchText; // text
 }
