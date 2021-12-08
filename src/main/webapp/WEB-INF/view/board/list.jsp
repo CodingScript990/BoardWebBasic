@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="/res/css/board/list.css?ver=2">
 
 <div class="search">
-    <form action="/board/list" method="get">
+    <form action="/board/list" method="get" id="searchFrm">
         <diV>
             <select name="searchType">
                 <option value="1" ${param.searchType == 1 ? 'selected' : ''}>제목</option>
@@ -16,6 +16,12 @@
             </select>
             <input type="search" name="searchText" value="${param.searchText}">
             <input type="submit" value="검색">
+            <%-- 나타나는 행 수  --%>
+            <select name="rowCnt">
+                <c:forEach var="cnt" begin="5" end="30" step="5">
+                    <option value="${cnt}" ${cnt == param.rowCnt ? 'selected' : ''}>${cnt}개</option>
+                </c:forEach>
+            </select>
         </diV>
     </form>
 </div>
@@ -45,15 +51,17 @@
                 </tr>
                 <c:forEach items="${requestScope.list}" var="item">
                     <%-- servlet에 해놓으면 굳이 이렇게 하지 않아도 된다! --%>
+                    <%-- set에 사용한건 script조작을 방지하기 위함, c:out을 대신해서 작업! --%>
                     <c:set var="eachTitle" value="${fn:replace(fn:replace(item.title, '>', '&gt;'), '<', '&lt;')}" />
                     <%-- page 안에(BoardVO) title 주소값을 받아온다. --%>
-                    <c:if test="${param.searchType == 1 || param.searchType == 3 || param.searchType == 5}">
+                    <c:if test="${param.searchText != null && param.searchType == 1 || param.searchType == 3 || param.searchType == 5}">
                         <c:set var="eachTitle" value="${fn:replace(eachTitle, param.searchText, '<mark>' += param.searchText += '</mark>')}" />
                     </c:if>
 
+                    <%-- 이름도 script방지를 해주면 좋다! --%>
                     <c:set var="eachWriterNm" value="${item.writerNm}" />
                     <%-- page 안에(BoardVO) title 주소값을 받아온다. --%>
-                    <c:if test="${param.searchType == 4 || param.searchType == 5}">
+                    <c:if test="${param.searchText != null && param.searchType == 4 || param.searchType == 5}">
                         <c:set var="eachWriterNm" value="${fn:replace(eachWriterNm, param.searchText, '<mark>' += param.searchText += '</mark>')}" />
                     </c:if>
 
@@ -72,11 +80,11 @@
                 <c:set var="selectedPage" value="${param.page == null ? 1 : param.page}"/>
                 <%-- selectedPage값이 page값과 null이면 1 아니면 param.page --%>
                 <c:forEach var="page" begin="1" end="${maxPageNum}">
-                    <div><a href="/board/list?page=${page}&searchType=${param.searchType}&searchText=${param.searchText}"><span class="${selectedPage == page ? 'selected' : ''}" ><c:out value="${page}"></c:out></span></a></div>
+                    <div><a href="/board/list?page=${page}&searchType=${param.searchType}&searchText=${param.searchText}&rowCnt=${param.rowCnt}"><span class="${selectedPage == page ? 'selected' : ''}" ><c:out value="${page}"></c:out></span></a></div>
                 </c:forEach>
             </div>
         </div>
     </c:otherwise>
 
 </c:choose>
-<script src="/res/js/board/list.js"></script>
+<script src="/res/js/board/list.js?ver=1"></script>

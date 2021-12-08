@@ -66,7 +66,7 @@ public class BoardDAO {
     }
 
     // search
-    private static  String getSearchWhereString(BoardDTO param) {
+    private static  String getSearchWhereString(BoardDTO param) { // 검색
         if (param.getSearchText() != null && !"".equals(param.getSearchText())) { // null값이 아니라면!
 
             switch (param.getSearchType()) {

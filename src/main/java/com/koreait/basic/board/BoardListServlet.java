@@ -22,6 +22,9 @@ public class BoardListServlet extends HttpServlet {
         int searchType = Utils.getParameterInt(req, "searchType", 0);
         String searchText = req.getParameter("searchText");
 
+        // count
+        int rowCnt = Utils.getParameterInt(req, "rowCnt", 5);
+
         // param setting
         int page = Utils.getParameterInt(req, "page", 1);
 
@@ -33,6 +36,8 @@ public class BoardListServlet extends HttpServlet {
 
         param.setSearchType(searchType); // type 값
         param.setSearchText(searchText); // text 값
+
+        param.setRowCnt(rowCnt); // count 값
 
         int startIdx = (param.getPage() - 1) * param.getRowCnt(); // 바로 page 값 계산!!
         param.setStartIdx(startIdx); // list value 값 불러오고!
