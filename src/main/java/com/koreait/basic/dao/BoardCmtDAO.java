@@ -94,6 +94,32 @@ public class BoardCmtDAO {
 
     // update
 
+    public static int upBoardCmt(BoardCmtEntity entity) {
+
+        Connection con = null;
+        PreparedStatement ps = null;
+
+        String sql = "UPDATE t_board_cmt SET ctnt = ?, mdt = now() WHERE icmt = ? AND writer = ?";
+
+        try {
+            con = DbUtils.getCon();
+            ps = con.prepareStatement(sql);
+
+            ps.setString(1, entity.getCtnt());
+            ps.setInt(2, entity.getIcmt());
+            ps.setInt(3, entity.getWriter());
+
+            return ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DbUtils.close(con, ps);
+        }
+
+        return 0;
+    }
+
     // delete
 
     public static int delBoardCmt(BoardCmtEntity entity) {

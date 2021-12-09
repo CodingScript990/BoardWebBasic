@@ -5,3 +5,22 @@ function isDelCmt(iboard, icmt) {
     }
 
 }
+
+// onclick 선택자들
+let cmtModContainerElem = document.querySelector('.cmtModContainer');
+let btnCancel = cmtModContainerElem.querySelector('#btnCancel');
+let cmtModFrmElem = cmtModContainerElem.querySelector('#cmtModFrm');
+
+// click event
+btnCancel.addEventListener('click', () => {
+    cmtModContainerElem.style.display='none';
+});
+
+// onclick
+function openModForm(icmt, ctnt) {
+
+    cmtModContainerElem.style.display='flex';
+
+    cmtModFrmElem.icmt.value=icmt; // icmt접근하라
+    cmtModFrmElem.ctnt.value=ctnt; // ctnt접근하라
+}

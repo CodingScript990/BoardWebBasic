@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-<link rel="stylesheet" href="/res/css/board/detail.css">
+<link rel="stylesheet" href="/res/css/board/detail.css?ver=2">
 <%-- 글번호, 글제목, 글내용, 조회수, 작성자(이름), 등록일시 --%>
 <div>
 <%-- 내가 쓴 글이면 버튼이 나타낙 해주기! --%>
@@ -52,7 +52,7 @@
                     <c:if test="${sessionScope.loginUser.iuser == requestScope.data.writer}">
                         <td>
                             <div>
-                                <button>수정</button>
+                                <button onclick="openModForm(${item.icmt}, '${item.ctnt}');">수정</button>
                                 <button onclick="isDelCmt(${requestScope.data.iboard}, ${item.icmt});">삭제</button>
                             </div>
                         </td>
@@ -63,4 +63,19 @@
     </div>
 
 </div>
-<script src="/res/js/board/detail.js"></script>
+
+<div class="cmtModContainer">
+    <div class="cmtModBody">
+        <form action="/board/cmt/mod" method="post" id="cmtModFrm">
+            <input type="hidden" name="iboard" value="${requestScope.data.iboard}">
+            <input type="hidden" name="icmt">
+            <div>
+                <input type="text" name="ctnt" placeholder="댓글 내용">
+                <input type="submit" value="수정">
+                <input type="button" value="취소" id="btnCancel">
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="/res/js/board/detail.js?ver=2"></script>
