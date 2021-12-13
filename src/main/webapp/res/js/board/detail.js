@@ -24,3 +24,5 @@ function openModForm(icmt, ctnt) {
     cmtModFrmElem.icmt.value=icmt; // icmt접근하라
     cmtModFrmElem.ctnt.value=ctnt; // ctnt접근하라
 }
+
+// heart

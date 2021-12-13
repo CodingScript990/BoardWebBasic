@@ -12,6 +12,20 @@
             <a href="/board/regmod?iboard=${requestScope.data.iboard}"><button>수정</button></a>
         </div>
     </c:if>
+
+    <c:if test="${sessionScope.loginUser != null}">
+        <div class="fav">
+            <c:choose>
+                <c:when test="${requestScope.isHeart == 1}">
+                    <a href="/board/heart?proc=2&iboard=${requestScope.data.iboard}"><i class="fas fa-heart"></i></a>
+                </c:when>
+                <c:otherwise>
+                    <a href="/board/heart?proc=1&iboard=${requestScope.data.iboard}"><i class="far fa-heart"></i></a>
+                </c:otherwise>
+            </c:choose>
+        </div>
+    </c:if>
+
     <div class="counting">조회수 : <c:out value="${requestScope.data.hit}"/></div>
     <div>글번호 : ${requestScope.data.iboard}</div>
     <div>글제목 :<c:out value="${requestScope.data.title}"/></div>

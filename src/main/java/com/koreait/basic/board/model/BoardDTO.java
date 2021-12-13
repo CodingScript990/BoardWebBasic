@@ -12,4 +12,5 @@ public class BoardDTO {
     private int rowCnt; // record
     private int searchType; // type
     private String searchText; // text
+    private int loginUserPk; // pk
 }

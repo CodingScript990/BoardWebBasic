@@ -3,9 +3,11 @@ package com.koreait.basic.board;
 import com.koreait.basic.Utils;
 import com.koreait.basic.board.model.BoardCmtDTO;
 import com.koreait.basic.board.model.BoardDTO;
+import com.koreait.basic.board.model.BoardHeartEntity;
 import com.koreait.basic.board.model.BoardVO;
 import com.koreait.basic.dao.BoardCmtDAO;
 import com.koreait.basic.dao.BoardDAO;
+import com.koreait.basic.dao.BoardHeartDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,6 +40,14 @@ public class BoardDetailServlet extends HttpServlet {
         // 로그인 한 사람의 pk값과 data에 들어있는 writer 값이 다르다면 혹은
         // 로그인이 안되어 있으면 hit값을 올려주면 된다.
         int loginUserPk = Utils.getLoginUserPk(req);
+
+        if (loginUserPk > 0) { // 로그인이 되어 있어야한다!
+            BoardHeartEntity heartEntity = new BoardHeartEntity();
+            heartEntity.setIuser(loginUserPk);
+            heartEntity.setIboard(iboard);
+            req.setAttribute("isHeart", BoardHeartDAO.selIsHeart(heartEntity));
+        }
+
         if (vo.getWriter() != loginUserPk || nohits != 1) { // 로그인 안되어 있으면 0, 로그인 되어있으면 pk값
             BoardDAO.updBoardHitUp(dto);
         }

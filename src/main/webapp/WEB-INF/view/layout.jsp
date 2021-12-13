@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${requestScope.title}</title> <!-- 받은 타이틀값 -->
     <link rel="stylesheet" href="/res/css/common.css?ver=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <%-- 브라우저에서 실행할때 다운로드 되어서 실행해주는 것 --%>
 </head>
@@ -20,15 +21,19 @@
              -->
             <ul class="topMenu">
                 <li><a href="/board/list">게시판</a></li>
+                <li><a href="/board/rank?type=1">조회수 Top 10</a></li>
+
                     <c:if test="${sessionScope.loginUser != null}">
                         <li><a href="/board/regmod">글쓰기</a></li>
                         <li>${sessionScope.loginUser.nm}(${sessionScope.loginUser.uid})님 환영합니다.</li>
                         <li><a href="/user/logout">로그아웃</a></li>
                     </c:if>
+
                     <c:if test="${sessionScope.loginUser == null}">
                         <li style="flex-grow: 1; text-align: right;"><a href="/user/login">로그인</a></li>
                         <li style="flex-grow: 0; text-align: right"><a href="/user/join">회원가입</a></li>
                     </c:if>
+
             </ul>
         </div>
         <div class="body">

@@ -84,6 +84,15 @@ td, th {
     padding: 20px;
 }
 
+.fav {
+    font-size: 1.125em;
+    color: #f66e6e;
+}
+
+.fav i:hover {
+    cursor: pointer;
+}
+
 .footer {
     background-color: #414141;
     color: #fff;
