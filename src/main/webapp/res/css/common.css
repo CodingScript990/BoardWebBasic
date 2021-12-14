@@ -84,6 +84,24 @@ td, th {
     padding: 20px;
 }
 
+.subContainer {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 120px 1fr;
+}
+
+.subContainer .subMenus {
+    border-right: 1px solid #868484;
+}
+
+.subContainer .subMenus ul li {
+    margin-bottom: 1em;
+}
+
+.subContainer .subBody {
+    padding: 0 10px;
+}
+
 .fav {
     font-size: 1.125em;
     color: #f66e6e;
