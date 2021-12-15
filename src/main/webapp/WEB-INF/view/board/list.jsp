@@ -65,12 +65,17 @@
                         <c:set var="eachWriterNm" value="${fn:replace(eachWriterNm, param.searchText, '<mark>' += param.searchText += '</mark>')}" />
                     </c:if>
 
+                    <c:set var="pImg" value="defaultProfile.jpg"/>
+                    <c:if test="${item.profileImg != null}">
+                        <c:set var="pImg" value="profile/${item.writer}/${item.profileImg}"/>
+                    </c:if>
+
                     <tr class="record" onclick="moveToDetail(${item.iboard});">
                         <%-- (BoardVO) info 주소값을 받아온다. --%>
                         <td>${item.iboard}</td>
                         <td>${eachTitle}</td>
                         <td>${item.hit}</td>
-                        <td>${eachWriterNm}</td>
+                        <td>${eachWriterNm}<div><img class="profile-sm" src="/res/img/${pImg}"></div></td>
                         <td>${item.mdt}</td>
                     </tr>
                 </c:forEach>

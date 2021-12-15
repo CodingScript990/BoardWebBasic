@@ -12,39 +12,32 @@ import java.util.List;
 public class BoardRankDAO {
 
     // select
+    public static List<BoardVO> procResultSet(String sql) {
 
-    // 조회수
-
-    public static List<BoardVO> selBoardHitsRankList() {
         List<BoardVO> list = new ArrayList();
+
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = " SELECT A.iboard, A.title, A.writer, A.hit, A.rdt, A.mdt " +
-                " , B.nm AS writerNm " +
-                " FROM t_board A " +
-                " INNER JOIN t_user B " +
-                " ON A.writer = B.iuser " +
-                " WHERE A.hit > 0 " +
-                " ORDER BY A.hit DESC, A.iboard DESC" +
-                " LIMIT 10 ";
+
         try {
             con = DbUtils.getCon();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
 
-            while(rs.next()) {
+            while (rs.next()) {
                 BoardVO vo = BoardVO.builder()
                         .iboard(rs.getInt("iboard"))
                         .title(rs.getString("title"))
                         .writer(rs.getInt("writer"))
-                        .hit(rs.getInt("hit"))
                         .rdt(rs.getString("rdt"))
                         .mdt(rs.getString("mdt"))
                         .writerNm(rs.getString("writerNm"))
+                        .cnt(rs.getInt("cnt"))
                         .build();
                 list.add(vo);
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -53,14 +46,25 @@ public class BoardRankDAO {
         return list;
     }
 
+    // 조회수
+
+    public static List<BoardVO> selBoardHitsRankList() {
+
+        String sql = " SELECT A.iboard, A.title, A.writer, A.hit AS cnt, A.rdt, A.mdt " +
+                " , B.nm AS writerNm " +
+                " FROM t_board A " +
+                " INNER JOIN t_user B " +
+                " ON A.writer = B.iuser " +
+                " WHERE A.hit > 0 " +
+                " ORDER BY A.hit DESC, A.iboard DESC" +
+                " LIMIT 10 ";
+
+        return procResultSet(sql);
+    }
+
     // 댓글수
 
     public static List<BoardVO> selBoardCmtRankList() {
-
-        List<BoardVO> list = new ArrayList<>();
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
 
         String sql = " SELECT A.iboard, A.title, A.writer, A.rdt, A.mdt, B.nm AS writerNm, C.cnt " +
                     " FROM t_board A " +
@@ -73,38 +77,28 @@ public class BoardRankDAO {
                     " ON A.iboard = C.iboard " +
                     " ORDER BY C.cnt DESC " +
                     " LIMIT 10 ";
-        try {
-            con = DbUtils.getCon();
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
 
-            while (rs.next()) {
-                BoardVO vo = BoardVO.builder()
-                            .iboard(rs.getInt("iboard"))
-                            .title(rs.getString("title"))
-                            .writer(rs.getInt("writer"))
-                            .rdt(rs.getString("rdt"))
-                            .mdt(rs.getString("mdt"))
-                            .writerNm(rs.getString("writerNm"))
-                            .cnt(rs.getInt("cnt"))
-                            .build();
-                list.add(vo);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            DbUtils.close(con, ps, rs);
-        }
-        return list;
+        return procResultSet(sql);
     }
 
     // 좋아요수
 
     public static List<BoardVO> selBoardHeartRankList() {
 
-        List<BoardVO> list = new ArrayList<>();
+        String sql = " SELECT A.iboard, A.title, A.writer, A.rdt, A.mdt, B.nm AS writerNm, C.cnt " +
+                    " FROM t_board A " +
+                    " INNER JOIN t_user B " +
+                    " ON A.writer = B.iuser " +
+                     "INNER JOIN " +
+                    " ( " +
+                    " SELECT iboard, COUNT(iuser) AS cnt " +
+                    " FROM t_board_like " +
+                    " GROUP BY iboard " +
+                    " ) C " +
+                    " ON A.iboard = C.iboard " +
+                    " ORDER BY C.cnt DESC " +
+                    " LIMIT 10 ";
 
-        return list;
+        return procResultSet(sql);
     }
 }

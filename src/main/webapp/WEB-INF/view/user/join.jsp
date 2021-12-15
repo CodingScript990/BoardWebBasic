@@ -6,8 +6,8 @@
         <div><input type="password" id="reupw" placeholder="password comfirm" required></div>
         <div><input type="text" name="nm" placeholder="name" required></div>
         <div>
-            <label>woman <input type="radio" value="1" name="gender" checked></label>
-            <label>man <input type="radio" value="2" name="gender"></label>
+            <label>man <input type="radio" value="1" name="gender" checked></label>
+            <label>woman <input type="radio" value="2" name="gender"></label>
         </div>
         <div>
             <input type="submit" value="join">

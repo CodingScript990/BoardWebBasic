@@ -134,7 +134,7 @@ public class BoardDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String sql = " SELECT A.iboard, A.title, A.writer, A.hit, A.rdt, A.mdt, B.nm AS writerNm " +
+        String sql = " SELECT A.iboard, A.title, A.writer, A.hit, A.rdt, A.mdt, B.nm AS writerNm, B.profileImg " +
                     " FROM t_board A" +
                     " INNER JOIN t_user B" +
                     " ON A.writer = B.iuser";
@@ -160,6 +160,7 @@ public class BoardDAO {
                 String rdt = rs.getString("rdt");
                 String mdt = rs.getString("mdt");
                 String writerNm = rs.getString("writerNm");
+                String profileImg = rs.getString("profileImg");
 
                 // 필요한 값을 받는 것!(빌드패턴 디자인!)
                 BoardVO vo = BoardVO.builder().
@@ -170,6 +171,7 @@ public class BoardDAO {
                         rdt(rdt).
                         mdt(mdt).
                         writerNm(writerNm).
+                        profileImg(profileImg).
                         build();
                 list.add(vo);
             }

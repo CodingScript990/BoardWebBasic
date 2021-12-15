@@ -57,6 +57,7 @@ td, th {
 
 .topMenu {
     display: flex;
+    flex-flow: wrap;
 }
 
 .topMenu li a{
@@ -71,13 +72,31 @@ td, th {
     margin-left: 15px;
 }
 
-.topMenu > li:nth-child(3) {
+.topMenu > li:nth-child(1) {
+    text-align: left;
     flex-grow: 1;
 }
 
-.topMenu > li:nth-child(3),li:nth-child(4) {
+.topMenu > li:nth-child(5) {
+    flex-grow: 1;
     text-align: right;
+}
+.topMenu > li:nth-child(7) {
     color: #fff;
+}
+
+.profile-img {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    border: 5px solid rgba(250, 136, 136, 0.6);
+}
+
+.profile-sm {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 5px solid rgba(250, 136, 136, 0.6);
 }
 
 .body {

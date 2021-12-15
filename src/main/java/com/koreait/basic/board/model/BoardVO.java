@@ -17,4 +17,5 @@ public class BoardVO { // 불변형! jsp 에서만 사용하는 거라고 생각
 
     private String writerNm;
     private int cnt;
+    private String profileImg;
 }
