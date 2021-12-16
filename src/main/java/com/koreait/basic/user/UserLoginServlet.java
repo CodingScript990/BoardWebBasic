@@ -4,6 +4,7 @@ import com.koreait.basic.Utils;
 import com.koreait.basic.dao.UserDAO;
 import com.koreait.basic.user.model.LoginResult;
 import com.koreait.basic.user.model.UserEntity;
+import org.mindrot.jbcrypt.BCrypt;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,34 +25,36 @@ public class UserLoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         String uid = req.getParameter("uid");
         String upw = req.getParameter("upw");
+
         UserEntity entity = new UserEntity();
 
         entity.setUid(uid);
-        entity.setUpw(upw);
 
         System.out.println(entity);
 
-        LoginResult lr = UserDAO.login(entity);
+//        LoginResult lr = UserDAO.login(entity);
+
         String err = null;
-        switch (lr.getResult()) {
-            case 1:
-                // 세션에 loginUser값 등록
-                HttpSession session = req.getSession();
-                session.setAttribute("loginUser", lr.getLoginUser());
-                // 이동은 마음대로!
+
+        UserEntity loginUser = UserDAO.selUser2(entity);
+
+        if (loginUser == null) { // 아이디 없음
+            err = "아이디를 확인해 주세요.";
+        } else {
+            String dbPw = loginUser.getUpw();
+
+            if (BCrypt.checkpw(upw, dbPw)) {// 비밀번호 맞음
+                loginUser.setUpw(null);
+
+                // session loginUser 값 등록
+                HttpSession hs = req.getSession();
+                hs.setAttribute("loginUser", loginUser);
                 res.sendRedirect("/board/list");
                 return;
-            case 0:
-                err = "로그인을 실패하였습니다.";
-                break;
-            case 2:
-                err = "아이디를 확이해 주세요.";
-                break;
-            case 3:
-                err = "비밀번호를 확이해 주세요.";
-                break;
-
+            } else { // 비밀번호 틀림
+                err = "비밀번호를 확인해 주세요.";
             }
+        }
         req.setAttribute("err", err);
         doGet(req, res);
     }

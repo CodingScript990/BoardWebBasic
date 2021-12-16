@@ -85,6 +85,12 @@ td, th {
     color: #fff;
 }
 
+.record > td:nth-child(4) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .profile-img {
     width: 300px;
     height: 300px;
@@ -96,7 +102,8 @@ td, th {
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    border: 5px solid rgba(250, 136, 136, 0.6);
+    border: 2px solid rgba(250, 136, 136, 0.6);
+    margin-left: .5em;
 }
 
 .body {

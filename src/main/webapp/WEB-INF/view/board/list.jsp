@@ -75,7 +75,7 @@
                         <td>${item.iboard}</td>
                         <td>${eachTitle}</td>
                         <td>${item.hit}</td>
-                        <td>${eachWriterNm}<div><img class="profile-sm" src="/res/img/${pImg}"></div></td>
+                        <td>${eachWriterNm}<img class="profile-sm" src="/res/img/${pImg}"></td>
                         <td>${item.mdt}</td>
                     </tr>
                 </c:forEach>

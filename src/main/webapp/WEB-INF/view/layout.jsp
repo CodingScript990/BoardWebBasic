@@ -47,5 +47,16 @@
             footer
         </div>
     </div>
+    <c:if test="${requestScope.err != null}">
+        <script>
+            let body = document.querySelector('body');
+
+            body.onload = () => {
+                setTimeout( () => {
+                    alert(<c:out value="${requestScope.err}"/>);
+                }, 300);
+            }
+        </script>
+    </c:if>
 </body>
 </html>

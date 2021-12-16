@@ -71,7 +71,12 @@ public class UserProfileServlet extends HttpServlet {
         entity.setProfileImg(changeFileNm);
 
         int result = UserDAO.updUser(entity);
-//        doGet(req, res);
+
+        if (result == 1) {
+            UserEntity loginUser = Utils.getLoginUser(req);
+            loginUser.setProfileImg(changeFileNm);
+        }
+//        doGet(req, res); 새로고침시에 다시 업로드 되는 현상이 발생하기 때문!
         res.sendRedirect("/user/profile");
     }
 }

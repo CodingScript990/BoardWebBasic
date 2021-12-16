@@ -89,12 +89,14 @@ public class UserDAO {
         return new LoginResult(result, loginUser);
     }
 
+    // user search (select)
+
     public static UserEntity selUser(UserEntity entity) {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        String sql = "SELECT uid, nm, gender, rdt, profileImg FROM t_user WHERE iuser = ?";
+        String sql = "SELECT uid, upw, nm, gender, rdt, profileImg FROM t_user WHERE iuser = ?";
 
         try {
             con = DbUtils.getCon();
@@ -123,28 +125,74 @@ public class UserDAO {
         return null;
     }
 
+    //t_user 테이블에서 iuser or uid 유저 정보 가져올 수 있는 메소드
+    public static UserEntity selUser2(UserEntity entity) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT iuser, uid, upw, nm, gender, rdt, profileImg FROM t_user WHERE ";
+
+        if(entity.getIuser() > 0) {
+            sql += "iuser = " + entity.getIuser();
+        } else {
+            sql += "uid = '" + entity.getUid() + "'";
+        }
+        try {
+            con = DbUtils.getCon();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if(rs.next()) {
+                UserEntity vo = new UserEntity();
+                vo.setIuser(rs.getInt("iuser"));
+                vo.setUid(rs.getString("uid"));
+                vo.setUpw(rs.getString("upw"));
+                vo.setNm(rs.getString("nm"));
+                vo.setGender(rs.getInt("gender"));
+                vo.setRdt(rs.getString("rdt"));
+                vo.setProfileImg(rs.getString("profileImg"));
+                return vo;
+            }
+        } catch (Exception e) { e.printStackTrace();
+        } finally { DbUtils.close(con, ps, rs); }
+        return null;
+    }
+
+    // 비밀번호 변경 > iuser, upw(암호화)가 넘어옴
+    // 프로필 이미지 > iuser, profileImg 가 넘어온다.
+
+    // 프로필 업데이트
+
     public static int updUser(UserEntity entity) {
+
         Connection con = null;
         PreparedStatement ps = null;
 
-        String sql = " UPDATE t_user SET ";
-        String changeVal = null;
+//        String sql = " UPDATE t_user SET "; // update t_user
+//        String changeVal = null; // String value 값
+//
+//        if (entity.getUpw() != null && !"".equals(entity.getUpw())){ // 패스워드가 null값이 아니라면, "" 빈값이 아니라면
+//            sql += " upw = ? "; // upw의 값은?
+//            changeVal = entity.getUpw(); // 작성한 비밀번호의 값
+//        } else if (entity.getProfileImg() != null && !"".equals(entity.getProfileImg())) { // 프로필 이미지의 값이 있다면, 값이 없다면
+//            sql += " profileImg = ? "; // profileImg 값은?
+//            changeVal = entity.getProfileImg(); // 업로드된 profileImg 값
+//        }
+//        sql += " WHERE iuser = ? "; // 해당 유저값
 
-        if (entity.getUpw() != null && !"".equals(entity.getUpw())){
-            sql += " upw = ? ";
+        String sql = " UPDATE t_user SET profileImg = ? WHERE iuser = ? ";
+        String changeVal = entity.getProfileImg();
+
+        if (entity.getUpw() != null && !"".equals(entity.getUpw())) {
+            sql = sql.replace("profileImg", "upw");
             changeVal = entity.getUpw();
-        } else if (entity.getProfileImg() != null && !"".equals(entity.getProfileImg())) {
-            sql += " profileImg = ? ";
-            changeVal = entity.getProfileImg();
         }
-        sql += " WHERE iuser = ? ";
 
         try {
             con = DbUtils.getCon();
             ps = con.prepareStatement(sql);
 
-            ps.setString(1, changeVal);
-            ps.setInt(2, entity.getIuser());
+            ps.setString(1, changeVal); // 비밀번호
+            ps.setInt(2, entity.getIuser()); // 유저 PK
 
             return ps.executeUpdate();
         } catch (Exception e) {
@@ -152,7 +200,27 @@ public class UserDAO {
         } finally {
             DbUtils.close(con, ps);
         }
+        return 0;
+    }
 
+    public static int updUser2(UserEntity entity) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        String sql = " UPDATE t_user SET profileImg = ? WHERE iuser = ? ";
+        String changeVal = entity.getProfileImg();
+
+        if(entity.getUpw() != null && !"".equals(entity.getUpw())) {
+            sql = sql.replace("profileImg", "upw");
+            changeVal = entity.getUpw();
+        }
+        try {
+            con = DbUtils.getCon();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, changeVal);
+            ps.setInt(2, entity.getIuser());
+            return ps.executeUpdate();
+        } catch (Exception e) { e.printStackTrace();
+        } finally { DbUtils.close(con, ps); }
         return 0;
     }
 }

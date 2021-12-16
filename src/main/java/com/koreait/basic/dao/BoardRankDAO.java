@@ -34,6 +34,7 @@ public class BoardRankDAO {
                         .mdt(rs.getString("mdt"))
                         .writerNm(rs.getString("writerNm"))
                         .cnt(rs.getInt("cnt"))
+                        .profileImg(rs.getString("profileImg"))
                         .build();
                 list.add(vo);
             }
@@ -51,7 +52,7 @@ public class BoardRankDAO {
     public static List<BoardVO> selBoardHitsRankList() {
 
         String sql = " SELECT A.iboard, A.title, A.writer, A.hit AS cnt, A.rdt, A.mdt " +
-                " , B.nm AS writerNm " +
+                " , B.nm AS writerNm, B.profileImg " +
                 " FROM t_board A " +
                 " INNER JOIN t_user B " +
                 " ON A.writer = B.iuser " +
@@ -66,7 +67,7 @@ public class BoardRankDAO {
 
     public static List<BoardVO> selBoardCmtRankList() {
 
-        String sql = " SELECT A.iboard, A.title, A.writer, A.rdt, A.mdt, B.nm AS writerNm, C.cnt " +
+        String sql = " SELECT A.iboard, A.title, A.writer, A.rdt, A.mdt, B.nm AS writerNm, B.profileImg, C.cnt " +
                     " FROM t_board A " +
                     " INNER JOIN t_user B " +
                     " ON A.writer = B.iuser " +
@@ -85,7 +86,7 @@ public class BoardRankDAO {
 
     public static List<BoardVO> selBoardHeartRankList() {
 
-        String sql = " SELECT A.iboard, A.title, A.writer, A.rdt, A.mdt, B.nm AS writerNm, C.cnt " +
+        String sql = " SELECT A.iboard, A.title, A.writer, A.rdt, A.mdt, B.nm AS writerNm, B.profileImg, C.cnt " +
                     " FROM t_board A " +
                     " INNER JOIN t_user B " +
                     " ON A.writer = B.iuser " +
